@@ -3,13 +3,14 @@ const path = require('path');
 const express = require('express');
 const session = require('express-session');
 const exphbs = require ('express-handlebars');
-const SequelizeStore = require('connect-session-sequzelize')(session.Store);
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const routes = require('./controllers');
 const sequelize = require('./config/connection');
 
 //Establishes that all app functions will be used with express and the PORT will be taken from the .env, if no .env is present it will be 3001 by default.
 const app = express();
 const PORT = process.env.PORT || 3001;
+const helpers = require('./utils/helpers')
 
 //Sets up session storage for a 24 hour time period using maxAge's equation
 const sess = {
@@ -27,7 +28,7 @@ const sess = {
 app.use(session(sess));
 
 //Setting up handlebars for use
-const hbs = exphbs.create();
+const hbs = exphbs.create({ helpers });
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 

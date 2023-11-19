@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech Blog</title>
+</head>
+<body>
+
+  {{!-- Setting up header colors and title --}}
+  <nav class="navbar bg-body-tertiary" style="
+      background: linear-gradient(
+        90deg,
+        rgb(31, 143, 77) 21%,
+        rgb(47, 147, 89) 52%,
+        rgb(18, 133, 56) 71%,
+        rgb(13, 94, 6) 88%
+      );">
+  <div class="container-fluid">
+    <span id="brand" class="navbar-brand mb-0 h1" style="font-size: 75px; font-family: monoton; color: white; margin-top:25px;"
+    ><a href="/">The Tech Blog</a></span>
+  </div>
+
+  {{!-- Setting up Navigation Bar --}}
+  <div class="collapse navbar-collapse d-flex justify-content-end" style="font-size: 25px; color: white; margin-right:20px">
+    <a href="/">Home</a>
+    <a href="/">Dashboard</a>
+    {{#if loggedIn}}
+      <button id="logout" class="btn-no-style">Logout</button>
+    {{else}}
+      <a href="/login" >Login</a>
+    {{/if}}
+  </div>
+  </nav>
+
+  {{!-- Setting up body of handlebars pages --}}
+  <main>
+    <div class="justify-content-center mx-auto rate">
+      {{{body}}}
+    </div>
+  </main>
+  {{#if loggedIn}}
+    <script src="/js/logout.js"></script>
+  {{/if}}
+</body>
+</html>
