@@ -2,15 +2,16 @@
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
-const exphbs = require ('express-handlebars');
+const exphbs = require('express-handlebars');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const routes = require('./controllers');
 const sequelize = require('./config/connection');
+const helpers = require('./utils/helpers');
 
 //Establishes that all app functions will be used with express and the PORT will be taken from the .env, if no .env is present it will be 3001 by default.
 const app = express();
 const PORT = process.env.PORT || 3001;
-const helpers = require('./utils/helpers')
+
 
 //Sets up session storage for a 24 hour time period using maxAge's equation
 const sess = {
@@ -19,8 +20,8 @@ const sess = {
     maxAge: 24*60*60*1000,
   },
   resave: false,
-  saveUninitiated: true,
-  store: new SequlizeStore({
+  saveUninitialized: true,
+  store: new SequelizeStore({
     db: sequelize,
   }),
 };
@@ -41,7 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(routes);
 
 //opens server on designated PORT
-sequelize.sync({ force: false }).then(()=>{
+sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () =>
     console.log(
       `\nServer running on port ${PORT}.`
