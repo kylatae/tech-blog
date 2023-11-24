@@ -15,7 +15,7 @@ Message.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    body: {
+    user_body: {
       type: DataTypes.STRING,
       allowNull: false,
     },

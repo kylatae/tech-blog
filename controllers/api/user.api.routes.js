@@ -3,7 +3,6 @@ const User = require("../../models/User");
 
 //create a new user
 router.post("/", async (req, res) => {
-  console.log("NewUser")
   try {
     const payload = await User.create(req.body);
     res.status(200).json({ status: "success", payload });
@@ -14,7 +13,6 @@ router.post("/", async (req, res) => {
 
 //login user
 router.post('/login', async (req, res) => {
-  console.log("Login")
   try {
     const dbUserData = await User.findOne({
       where: {
@@ -37,9 +35,11 @@ router.post('/login', async (req, res) => {
         .json({ message: 'Incorrect user or password. Please try again!' });
       return;
     }
-
     req.session.save(() => {
       req.session.loggedIn = true;
+      req.session.userID = dbUserData.id
+
+
 
       res
         .status(200)

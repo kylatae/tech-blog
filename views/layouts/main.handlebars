@@ -21,9 +21,9 @@
     {{!-- Setting up Navigation Bar --}}
     <div class="collapse navbar-collapse d-flex justify-content-start">
       <a href="/">Home</a>
-      <a href="/">Dashboard</a>
+      <a href="/post">Dashboard</a>
       {{#if loggedIn}}
-        <button id="logout" class="btn-no-style">Logout</button>
+        <a id='logout' href="/" >Logout</a>
       {{else}}
         <a href="/login" >Login</a>
       {{/if}}

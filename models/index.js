@@ -1,19 +1,19 @@
 const User = require('./User');
 const Message = require('./Message')
 
-// Message.belongsToOne(User,{
-//   through:{
-//     model: Message,
-//     unique: false
-//   },
-//   as: 'messageuser',
-//   foreignKey:{
-//     name: 'user_id',
-//     allowNull: false
-//   }
-// })
+Message.belongsTo(User,{
+  through:{
+    model: Message,
+    unique: false
+  },
+  as: 'messageuser',
+  foreignKey:{
+    name: 'user_id',
+    allowNull: false
+  }
+})
 
-// User.hasMany(Message,{
+// User.belongsToMany(Message,{
 //   through:{
 //     model: Message,
 //     unique: false,
