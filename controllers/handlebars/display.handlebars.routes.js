@@ -1,14 +1,30 @@
 const router = require('express').Router();
+const { User, Message } = require('../../models');
 
 router.get('/', async (req, res) => {
   try{
-    res.render('homepage', {loggedIn: req.session.loggedIn});
+    const dbMessages = await Message.findAll({
+      include:[
+        {
+          model: User,
+          as: 'messageuser',
+          attributes: ['user']
+        }
+      ]
+    })
+    const messages = dbMessages.map((message) =>
+    message.get({plain: true})
+    )
+    console.log (messages[0].messageuser.user)
+
+    res.render('homepage', {messages, loggedIn: req.session.loggedIn});
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
   
 });
+
 
 router.get('/post', async (req, res) => {
   if (!req.session.loggedIn) {res.render('login')}
