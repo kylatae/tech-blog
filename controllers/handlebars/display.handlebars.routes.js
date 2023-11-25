@@ -27,62 +27,68 @@ router.get('/', async (req, res) => {
 
 
 router.get('/post', async (req, res) => {
-  try{
-    const dbMessages = await Message.findAll({
-      where:[
-        {
-          user_id: req.session.userID
-        }
-      ],
-      include:[
-        {
-          model: User,
-          as: 'messageuser',
-          attributes: ['user', 'id']
-        }
-      ]
-    })
-    const messages = dbMessages.map((message) =>
-    message.get({plain: true})
-    )
-    res.render('post', {messages,
-      loggedIn: req.session.loggedIn, 
-      });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
+  if (req.session.loggedIn){
+    try{
+      const dbMessages = await Message.findAll({
+        where:[
+          {
+            user_id: req.session.userID
+          }
+        ],
+        include:[
+          {
+            model: User,
+            as: 'messageuser',
+            attributes: ['user', 'id']
+          }
+        ]
+      })
+      const messages = dbMessages.map((message) =>
+      message.get({plain: true})
+      )
+      res.render('post', {messages,
+        loggedIn: req.session.loggedIn, 
+        });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  } else {
+    res.render('login')
   }
-  
 });
 
 router.get('/post/:id', async (req, res) => {
-  try{
-    const dbMessages = await Message.findAll({
-      where:[
-        {
-          id: req.params.id
-        }
-      ],
-      include:[
-        {
-          model: User,
-          as: 'messageuser',
-          attributes: ['user', 'id']
-        }
-      ]
-    })
-    const messages = dbMessages.map((message) =>
-    message.get({plain: true})
-    )
-    console.log(messages)
-    res.render('edit', {messages,
-      loggedIn: req.session.loggedIn, 
-      });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
+  if (req.session.loggedIn){
+    try{
+      const dbMessages = await Message.findAll({
+        where:[
+          {
+            id: req.params.id
+          }
+        ],
+        include:[
+          {
+            model: User,
+            as: 'messageuser',
+            attributes: ['user', 'id']
+          }
+        ]
+      })
+      const messages = dbMessages.map((message) =>
+      message.get({plain: true})
+      )
+      console.log(messages)
+      res.render('edit', {messages,
+        loggedIn: req.session.loggedIn, 
+        });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  } else {
+    res.render('login')
   }
-  
 });
 
 
