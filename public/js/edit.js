@@ -3,9 +3,11 @@ const postFormHandler = async (event) => {
 
   const title = document.querySelector('#post-title').value;
   const user_body = document.querySelector('#post-message').value;
-  console.log(title)
+  const id = document.querySelector('.post-id').id
+  console.log (id)
+
   if (title && user_body) {
-    const response = await fetch('/api/blog', {
+    const response = await fetch(`/api/blog/edit/${id}`, {
       method: 'POST',
       body: JSON.stringify({ title, user_body, }),
       headers: { 'Content-Type': 'application/json' },

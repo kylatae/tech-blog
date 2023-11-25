@@ -8,16 +8,16 @@ router.get('/', async (req, res) => {
         {
           model: User,
           as: 'messageuser',
-          attributes: ['user']
+          attributes: ['user', 'id']
         }
       ]
     })
     const messages = dbMessages.map((message) =>
     message.get({plain: true})
     )
-    console.log (messages[0].messageuser.user)
-
-    res.render('homepage', {messages, loggedIn: req.session.loggedIn});
+    res.render('homepage', {messages,
+      loggedIn: req.session.loggedIn, 
+      });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -27,15 +27,62 @@ router.get('/', async (req, res) => {
 
 
 router.get('/post', async (req, res) => {
-  if (!req.session.loggedIn) {res.render('login')}
-  else{
-    try{
-      res.render('post', {loggedIn: req.session.loggedIn});
-    } catch (err) {
-      console.log(err);
-      res.status(500).json(err);
-    }
+  try{
+    const dbMessages = await Message.findAll({
+      where:[
+        {
+          user_id: req.session.userID
+        }
+      ],
+      include:[
+        {
+          model: User,
+          as: 'messageuser',
+          attributes: ['user', 'id']
+        }
+      ]
+    })
+    const messages = dbMessages.map((message) =>
+    message.get({plain: true})
+    )
+    res.render('post', {messages,
+      loggedIn: req.session.loggedIn, 
+      });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
   }
+  
+});
+
+router.get('/post/:id', async (req, res) => {
+  try{
+    const dbMessages = await Message.findAll({
+      where:[
+        {
+          id: req.params.id
+        }
+      ],
+      include:[
+        {
+          model: User,
+          as: 'messageuser',
+          attributes: ['user', 'id']
+        }
+      ]
+    })
+    const messages = dbMessages.map((message) =>
+    message.get({plain: true})
+    )
+    console.log(messages)
+    res.render('edit', {messages,
+      loggedIn: req.session.loggedIn, 
+      });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+  
 });
 
 

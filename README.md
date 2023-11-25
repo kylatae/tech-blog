@@ -42,4 +42,4 @@
 
 [Video Example Link](./lib/vid/) 
 
-Repo Link:[https://www.github.com/kylatae/e-commerce/](https://www.github.com/kylatae/e-commerce)
+Repo Link:[https://www.github.com/kylatae/tech-blog/](https://www.github.com/kylatae/tech-blog)
