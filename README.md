@@ -38,8 +38,7 @@
   Please contact me using my github page at https://www.github.com/kylatae or email at kylatae@gmail.com
 
   ## Preview Page
-
-
-[Video Example Link](./lib/vid/) 
+![site review](./public/images/readme.png)
 
 Repo Link:[https://www.github.com/kylatae/tech-blog/](https://www.github.com/kylatae/tech-blog)
+Deployed Link: [https://kylatae-tech-blog-73057df98322.herokuapp.com/](https://kylatae-tech-blog-73057df98322.herokuapp.com/)
